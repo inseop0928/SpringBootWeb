@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mapper.TestSqlMapper">
+    <select id="selectTest" parameterType="string"  resultType="com.test.vo.Test01VO">
+        /*TestSqlMapper.selectTest*/
+        SELECT SEQ
+              , TITLE
+              , CONTENT
+              , REG_DT
+        FROM TB_TEST01
+        WHERE 1=1
+        <if test='value != null and value ==""'>
+            AND SEQ = #{value}
+        </if>
+    </select>
+
+    <update id="updateTest" parameterType="hashMap">
+    /*TestSqlMapper.updateTest*/
+        UPDATE TB_TEST01 SET
+            TITLE = #{title}
+            ,CONTENT = #{content}
+        WHERE SEQ = #{seq}
+    </update>
+
+    <delete id="deleteTest" parameterType="hashMap">
+        /*TestSqlMapper.deleteTest*/
+        DELETE FROM TB_TEST01 WHERE SEQ = #{seq}
+    </delete>
+
+    <insert id="insertTest"  parameterType="hashMap">
+        /*TestSqlMapper.insertTest*/
+        <selectKey keyProperty="seq" resultType="int" order="BEFORE">
+            SELECT SYSAPP.SEQ_TEST.NEXTVAL FROM DUAL
+        </selectKey>
+
+        INSERT INTO TB_TEST01
+        (SEQ
+        , TITLE
+        , CONTENT
+        , REG_DT)
+        VALUES(
+            #{seq}
+            ,#{title}
+            ,#{content}
+            ,SYSDATE
+        )
+    </insert>
+
+
+
+</mapper>

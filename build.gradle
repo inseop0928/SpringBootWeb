@@ -1,0 +1,54 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+group = 'com.jisWeb'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'junit:junit:4.12'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    compile("org.projectlombok:lombok")
+
+    /*jasper,jstl을 의존성에 추가해야 JSP파일의 구동이 가능하다.*/
+    compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+    compile('javax.servlet:jstl:1.2')
+
+    compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2")
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+
+
+    //dbConnection
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.7.0'
+    compile group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
+
+    //sql log
+    compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+
+    compile("org.springframework.boot:spring-boot-devtools")
+    implementation 'org.springframework.boot:spring-boot-starter'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    
+    //테스트에서 사용하기 위해 추가
+    testCompile('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
+
+}
+
+test {
+    useJUnitPlatform()
+}
